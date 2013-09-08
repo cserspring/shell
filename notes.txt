@@ -1,0 +1,56 @@
+awk '{sum += $1} END {print sum}' // add the values in the first column
+awk '{print $2, "\t", $3}'        // print out the 2nd and 3rd columns
+sort -k 2n file                   // sort the lines based on the 2nd column
+cat /dev/null > file              // clean up the content in file
+id -u root                        // get userid of root
+whoami                            // current user
+
+grep 不接受 \d，只能用[0-9]
+正则表达式尽量用括号包起来
+cat *.lst | sort | uniq
+echo {file1, file2} is different from echo {file1,file2}
+ls . | xargs -i -t cp ./{} abc/
+
+scriptname >filename redirects the output of scriptname to file filename. 
+Overwrite filename if it already exists.
+
+command &>filename redirects both the stdout and the stderr of command to 
+filename.
+
+command >&2 redirects stdout of command to stderr.
+
+scriptname >>filename appends the output of scriptname to file filename. If 
+filename does not already exist, it is created.
+
+[i]<>filename opens file filename for reading and writing, and assigns file 
+descriptor i to it. If filename does not exist, it is created.
+
+
+
+
+
+
+For grepping line-by-line in a file filename, I often find these very useful
+
+  Match pattern1 OR pattern2 in the same line:
+$ grep -E 'pattern1|pattern2' filename
+
+  Match pattern1 AND pattern2 in the same line:
+$ grep -E 'pattern1.*pattern2' filename
+  The above command searches for pattern1 followed by pattern2. If the order 
+  does not matter or you want to search them in either order, then use the
+  follwoing
+$ grep -E 'pattern1.*pattern2|pattern2.*pattern1' filename
+  The pipe enables the OR search which we saw earlier. Another option for this
+  situation (i.e., AND search when the order is not important):
+$ grep -E 'pattern1' filename | grep -E 'pattern2'
+  which basically greps the STDOUT of the first grep.
+
+  Match pattern1 AND pattern2, but NOT pattern3 in the same line:
+$ grep -E 'pattern1.*pattern2' filename | grep -Ev 'pattern3'
+  when the order of the first two patterns is important. When that order is 
+  NOT important:
+$ grep -E 'pattern1' filename | grep -E 'pattern2' | grep -Ev 'pattern3'
+
+  Match pattern1 OR pattern2, but NOT pattern3 in the same line:
+$ grep -E 'pattern1|pattern2' filename | grep -Ev 'pattern3'
