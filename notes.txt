@@ -4,6 +4,9 @@ sort -k 2n file                   // sort the lines based on the 2nd column
 cat /dev/null > file              // clean up the content in file
 id -u root                        // get userid of root
 whoami                            // current user
+ln -s /proc/ link                 // soft link
+
+echo $0                           // Get name of current shell
 
 grep 不接受 \d，只能用[0-9]
 正则表达式尽量用括号包起来
